@@ -1,0 +1,13 @@
+{
+  "name": "landing-page",
+  "version": "1.0.0",
+  "description": "Landing page для інтернет-магазину Oak Hill",
+  "main": "index.html",
+  "scripts": {
+    "start": "serve ."
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "serve": "^14.0.1"
+  }
+}

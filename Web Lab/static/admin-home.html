@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Адмін-Панель</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f5f5f5;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        header {
+            width: 100%;
+            background-color: #0b4c24;
+            color: white;
+            padding: 15px;
+            text-align: center;
+        }
+
+        .admin-info {
+            text-align: center;
+            margin: 20px 0;
+        }
+
+        .admin-info img {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            border: 2px solid #333;
+        }
+
+        .admin-info h2 {
+            margin: 10px 0 5px;
+            font-size: 18px;
+            color: #0b4c24;
+        }
+
+        .admin-info p {
+            font-size: 14px;
+            color: #666;
+        }
+
+        .admin-actions {
+            width: 80%;
+            max-width: 600px;
+            background-color: white;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            margin-top: 20px;
+        }
+
+        .product {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 10px;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .product input[type="text"] {
+            width: 60px;
+            margin-right: 10px;
+        }
+
+        .product button {
+            padding: 5px 10px;
+            background-color: #e74c3c;
+            color: white;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+
+        .product button:hover {
+            background-color: #c0392b;
+        }
+
+        .admin-actions h3 {
+            color: #0b4c24;
+            margin-bottom: 10px;
+        }
+
+        .add-product-form {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .add-product-form input[type="text"], 
+        .add-product-form input[type="number"] {
+            padding: 5px;
+            margin-right: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        .add-product-form button {
+            padding: 5px 15px;
+            background-color: #1ca80d;
+            color: white;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+
+        .add-product-form button:hover {
+            background-color: #06681c;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>Адмін-Панель</h1>
+    </header>
+
+    <!-- Інформація про адміністратора -->
+    <div class="admin-info">
+        <img src="https://via.placeholder.com/100" alt="Фото Адміністратора">
+        <h2>Адмін</h2>
+        <p id="username">Username</p>
+    </div>
+
+    <!-- Дії адміністратора -->
+    <div class="admin-actions">
+        <h3>Керування Каталогом Продуктів</h3>
+
+        <!-- Форма додавання продукту -->
+        <div class="add-product-form">
+            <input type="text" id="new-product-name" placeholder="Назва продукту">
+            <input type="number" id="new-product-price" placeholder="Ціна">
+            <button onclick="addProduct()">Додати продукт</button>
+        </div>
+
+        <!-- Список продуктів для редагування та видалення -->
+        <div id="product-list">
+            <div class="product" id="product-1">
+                <span>Яблуко</span>
+                <input type="text" value="20">
+                <button onclick="deleteProduct('product-1')">Видалити</button>
+            </div>
+            <div class="product" id="product-2">
+                <span>Банан</span>
+                <input type="text" value="25">
+                <button onclick="deleteProduct('product-2')">Видалити</button>
+            </div>
+            <div class="product" id="product-3">
+                <span>Апельсин</span>
+                <input type="text" value="30">
+                <button onclick="deleteProduct('product-3')">Видалити</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Отримання імені користувача для відображення
+        document.getElementById('username').textContent = localStorage.getItem('adminUsername') || 'Гість';
+
+        // Додавання продукту до списку
+        function addProduct() {
+            const productName = document.getElementById('new-product-name').value;
+            const productPrice = document.getElementById('new-product-price').value;
+
+            if (productName && productPrice) {
+                const productId = `product-${Date.now()}`; // Унікальний ID для продукту
+                const productList = document.getElementById('product-list');
+
+                const productDiv = document.createElement('div');
+                productDiv.classList.add('product');
+                productDiv.id = productId;
+                productDiv.innerHTML = `
+                    <span>${productName}</span>
+                    <input type="text" value="${productPrice}">
+                    <button onclick="deleteProduct('${productId}')">Видалити</button>
+                `;
+
+                productList.appendChild(productDiv);
+
+                // Очищення полів
+                document.getElementById('new-product-name').value = '';
+                document.getElementById('new-product-price').value = '';
+            } else {
+                alert('Будь ласка, введіть назву продукту та ціну');
+            }
+        }
+
+        // Видалення продукту зі списку
+        function deleteProduct(productId) {
+            const productElement = document.getElementById(productId);
+            if (productElement) {
+                productElement.remove();
+            }
+        }
+    </script>
+</body>
+</html>

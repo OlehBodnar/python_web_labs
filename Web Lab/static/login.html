@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Role Page</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+        }
+        
+        h2 {
+            text-align: center;
+        }
+
+        input {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        button {
+            padding: 10px;
+            background-color: #0b4c24;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            width: 100%;
+        }
+
+        button:hover {
+            background-color: #06681c;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="role-container">
+        <h2 id="greeting"></h2>
+
+        <div id="login-section">
+            <h3>Вхід</h3>
+            <input type="text" id="username" placeholder="Ім'я користувача" required>
+            <input type="password" id="password" placeholder="Пароль" required>
+            <button id="login-btn">Увійти</button>
+            <div id="login-message"></div>
+        </div>
+
+        <div id="register-section">
+            <h3>Реєстрація</h3>
+            <input type="text" id="reg-username" placeholder="Ім'я користувача" required>
+            <input type="email" id="reg-email" placeholder="Електронна пошта" required>
+            <input type="password" id="reg-password" placeholder="Пароль" required>
+            <button id="register-btn">Зареєструватися</button>
+            <div id="register-message"></div>
+        </div>
+    </div>
+
+    <script>
+        // Отримання ролі з URL
+        const urlParams = new URLSearchParams(window.location.search);
+        const role = urlParams.get('role');
+        
+        // Вітання залежно від ролі
+        const greeting = document.getElementById('greeting');
+        greeting.innerText = role === 'Admin' ? "Ласкаво просимо, адміністраторе!" : "Ласкаво просимо, клієнте!";
+        
+        // Реєстрація
+        document.getElementById('register-btn').addEventListener('click', async function() {
+            const username = document.getElementById('reg-username').value;
+            const email = document.getElementById('reg-email').value;
+            const password = document.getElementById('reg-password').value;
+
+            const response = await fetch('http://127.0.0.1:8000/register/', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ username, email, password })
+            });
+
+            const result = await response.json();
+
+            if (response.ok) {
+                document.getElementById('register-message').innerText = "Реєстрація успішна!";
+            } else {
+                document.getElementById('register-message').innerText = result.detail || "Помилка реєстрації";
+            }
+        });
+
+        // Вхід
+        document.getElementById('login-btn').addEventListener('click', async function() {
+    const username = document.getElementById('username').value;
+    const password = document.getElementById('password').value;
+
+    try {
+        const response = await fetch('http://127.0.0.1:8000/login/', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ username, password })
+        });
+
+        let result;
+        if (response.ok) {
+            result = await response.json(); // Перетворюємо в JSON, якщо запит успішний
+            console.log("Отримана відповідь:", result);
+
+            if (result.role === 'admin') {
+                window.location.href = 'http://127.0.0.1:8000/admin';
+            } else if (result.role === 'user') {
+                window.location.href = 'http://127.0.0.1:8000/user';
+            }
+        } else {
+            result = await response.text(); // Обробляємо як текст у випадку помилки
+            console.error("Помилка сервера:", result);
+            document.getElementById('login-message').innerText = result || "Помилка при вході";
+        }
+    } catch (error) {
+        console.error("Помилка при обробці відповіді:", error);
+        document.getElementById('login-message').innerText = "Виникла помилка на сервері.";
+    }
+});
+
+      
+    </script>
+</body>
+</html>

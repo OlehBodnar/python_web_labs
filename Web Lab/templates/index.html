@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Online Grocery Store - "Oak Hill"</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-image: url('https://miro.medium.com/v2/resize:fit:1400/1*ICI8HJhf7nFObxKL9iClpQ.png');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+        }
+
+        header {
+            background-color: #0b4c24;
+            color: white;
+            padding: 25px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo-container {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .logo-container img {
+            width: 100px;
+        }
+
+        .slogan {
+            flex: 1;
+            text-align: center;
+        }
+
+        .contact-info {
+            text-align: right;
+        }
+
+        main {
+            padding: 20px;
+        }
+
+        section {
+            margin: 20px 0;
+            padding: 20px;
+            background-color: white;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+            opacity: 0.85;
+        }
+
+        footer {
+            background-color: #333;
+            color: white;
+            text-align: center;
+            padding: 10px;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+        }
+
+        .button-container {
+            text-align: center;
+            margin: 20px;
+        }
+
+        button {
+            padding: 10px 30px;
+            background-color: #1ca80d;
+            color: white;
+            border: none;
+            cursor: pointer;
+            border-radius: 10px;
+            margin: 5px;
+        }
+
+        button:hover {
+            background-color: #06681c;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="logo-container">
+            <img src="static/Source/pngtree-oak-tree-logo-design-png-image_6566843.png" alt="Логотип"> <!-- Перевірте шлях -->
+            <div class="company-name">"OAK HILL"</div>
+        </div>
+        <div class="slogan">
+            <i>Найкращі продукти для вас з доставкою додому або в мережі магазинів</i>
+        </div>
+        <div class="contact-info">
+            <p>Email: <i>info@foodstore.com</i></p>
+            <p>Телефон: <i>+380 (99) 123 45 67</i></p>
+        </div>
+        <div class="button-container">
+            <button onclick="openRolePage('Admin')">Admin</button>
+            <button onclick="openRolePage('Client')">Client</button>
+            <a href="products.html">
+                <button>Перейти до каталогу</button>
+            </a>
+        </div>
+    </header>
+    
+    <main>
+        <section>
+            <h2>Про нас</h2>
+            <p>Ми пропонуємо свіжі та якісні продукти з доставкою до дверей. Наші клієнти – це ті, хто цінує здоровий спосіб життя та комфорт.</p>
+        </section>
+        <section>
+            <h2>Наша місія</h2>
+            <p>Забезпечити вас найкращими продуктами за найкращими цінами. Ми працюємо з найкращими постачальниками, щоб гарантувати якість та свіжість кожного замовлення.</p>
+        </section>
+        <section>
+            <h2>Чому саме ми?</h2>
+            <p>Доставка свіжих продуктів, персональні рекомендації, слоти в час який зручний саме тобі - "Oak Hill", саме те що тобі потрібно. </p>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2024 Інтернет-магазин харчової продукції. Всі права захищені.</p>
+    </footer>
+
+    <script>
+        function openRolePage(role) {
+            const url = `http://127.0.0.1:8000/login?role=${role}`; // Використовуємо URL з параметром
+            window.location.href = url; // Перенаправляємо на нову сторінку
+        }
+    </script>
+</body>
+</html>

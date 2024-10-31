@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Кабінет Клієнта</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f5f5f5;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        header {
+            width: 100%;
+            background-color: #0b4c24;
+            color: white;
+            padding: 15px;
+            text-align: center;
+        }
+
+        .client-info {
+            text-align: center;
+            margin: 20px 0;
+        }
+
+        .client-info img {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            border: 2px solid #333;
+        }
+
+        .client-info h2 {
+            margin: 10px 0 5px;
+            font-size: 18px;
+            color: #0b4c24;
+        }
+
+        .delivery-slot {
+            margin-top: 20px;
+            width: 80%;
+            max-width: 300px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .delivery-slot select, .delivery-slot button {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        .delivery-slot button {
+            background-color: #1ca80d;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+
+        .delivery-slot button:hover {
+            background-color: #06681c;
+        }
+
+        .catalog-button {
+            margin-top: 20px;
+            padding: 10px 20px;
+            background-color: #3498db;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+        }
+
+        .catalog-button:hover {
+            background-color: #2980b9;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>Кабінет Клієнта</h1>
+    </header>
+
+    <!-- Інформація про клієнта -->
+    <div class="client-info">
+        <img src="https://via.placeholder.com/100" alt="Фото Клієнта">
+        <h2>Ім'я Клієнта</h2>
+    </div>
+
+    <!-- Вибір слоту для доставки -->
+    <div class="delivery-slot">
+        <h3>Виберіть час доставки:</h3>
+        <select id="delivery-slot-select">
+            <option value="9:00-12:00">9:00 - 12:00</option>
+            <option value="12:00-15:00">12:00 - 15:00</option>
+            <option value="15:00-18:00">15:00 - 18:00</option>
+            <option value="18:00-21:00">18:00 - 21:00</option>
+        </select>
+        <button onclick="saveDeliverySlot()">Зберегти час доставки</button>
+    </div>
+    <div class="catalog-button">
+        <button onclick="openCatalogPage()">Перейти до каталогу</button>
+      </div>
+    <!-- Перехід до каталогу продуктів -->
+    
+
+    <script>
+        function saveDeliverySlot() {
+            const selectedSlot = document.getElementById('delivery-slot-select').value;
+            localStorage.setItem('deliverySlot', selectedSlot);
+            alert(`Час доставки "${selectedSlot}" збережено`);
+        }
+
+        // Завантаження збереженого часу доставки, якщо є
+        window.onload = function() {
+            const savedSlot = localStorage.getItem('deliverySlot');
+            if (savedSlot) {
+                document.getElementById('delivery-slot-select').value = savedSlot;
+            }
+        }
+        function openCatalogPage() {
+        window.location.href = `http://127.0.0.1:8000/products`;
+        }
+    </script>
+</body>
+</html>
